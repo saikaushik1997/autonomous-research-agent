@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import time
 
-API_URL = "http://localhost:8000" # replace with prod URL
+API_URL = "https://autonomous-research-agent.onrender.com"
 
 # cold start problem on the research web service
 def warmup_api(retries: int = 5, wait: int = 10) -> bool:
