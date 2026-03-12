@@ -12,18 +12,21 @@ llm = ChatOpenAI(
 tools = [search_web, search_documents]
 llm_with_tools = llm.bind_tools(tools)
 
+# Adding the IMPORTANT part to explicitly make the model focus on both sources.
+# Did some testing where the model was ignoring the inputs from the RAG, even when it had some relevant info.
 def agent_node(state: AgentState) -> dict:
     """Main agent node — LLM decides what to do next."""
     system_prompt = f"""You are an expert research assistant who can read and write reports exceptionally. Your goal is to research the following topic thoroughly:
 
-{state['research_topic']}
+    {state['research_topic']}
 
-You have access to two tools:
-- search_web: for current information, recent developments, and general knowledge
-- search_documents: for specific technical details from the research knowledge base
+    You have access to two tools:
+    - search_web: for current information, recent developments, and general knowledge
+    - search_documents: for specific technical details from the research knowledge base
 
-Use both tools to gather comprehensive information before writing your final report.
-Your final report should be structured with clear sections: Overview, Key Concepts, Current Developments, and Conclusion."""
+    IMPORTANT: Always use search_documents to find what the knowledge base says about the topic, 
+    and use search_web to find broader context and recent developments. 
+    Synthesize BOTH sources in your final report, explicitly referencing findings from the documents."""
 
     messages = [
         {"role": "system", "content": system_prompt},
