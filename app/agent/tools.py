@@ -7,7 +7,7 @@ import time
 # ── Web Search Tool ──────────────────────────────────────────
 tavily = TavilySearch(
     max_results=5,
-    api_key=settings.tavily_api_key
+    tavily_api_key=settings.tavily_api_key
 )
 
 # web search tool using Tavily API
