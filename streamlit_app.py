@@ -24,9 +24,12 @@ topic = st.text_area("Topic", placeholder="e.g. Gibbs sampling for multiple sequ
 
 if st.button("Research", type="primary", disabled=not topic):
     with st.spinner("Warming up..."):
-        if not warmup_api(retries=3, wait=5):
-            st.error("API unavailable.")
-            st.stop()
+        try:
+            r = requests.get(f"{API_URL}/health", timeout=10)
+            st.write(f"Health check status: {r.status_code}")
+            st.write(f"Health check response: {r.text}")
+        except Exception as e:
+            st.write(f"Health check error: {e}")
 
     with st.spinner("Researching..."):
         try:
