@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+langchain
+langchain-openai
+langchain-community
+langgraph
+tavily-python
+pydantic-settings
+python-dotenv
+streamlit
+requests
+langsmith
